@@ -1,0 +1,112 @@
+{% load static %}
+
+ <style>
+/* Style The Dropdown Button */
+.dropbtn {
+  color: white;
+  font-size: 16px;
+  padding:10px;
+  border: none;
+  border-radius:10px;
+  cursor: pointer;
+  margin-right:50px;
+}
+
+/* The container <div> - needed to position the dropdown content */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content (Hidden by Default) */
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+/* Links inside the dropdown */
+.dropdown-content a {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+}
+
+/* Change color of dropdown links on hover */
+.dropdown-content a:hover {background-color: blue;}
+
+/* Show the dropdown menu on hover */
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+/* Change the background color of the dropdown button when the dropdown content is shown */
+.dropdown:hover .dropbtn {
+  background-color: blue;
+}
+.options{
+    margin:1em;
+    margin-right:3em;
+    padding:5px;
+    border-radius:10px;
+}
+a:hover{
+    color: white;
+    background-color:blue;
+    text-decoration:none;
+}
+
+</style>
+
+<header class="text-gray-600 body-font text-white d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-blue-800 border-bottom shadow-sm">
+    <a class="flex order-first lg:order-none lg:w-1/5 title-font font-medium items-center text-gray-900 lg:items-center lg:justify-center mb-4 md:mb-0"
+       href="{% url 'Account:home' %}">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-linecap="round"
+             stroke-linejoin="round" stroke-width="2" class="w-10 h-10 text-white p-2 bg-blue-500 rounded-full"
+             viewBox="0 0 24 24">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+        </svg>
+        <span class="ml-3 mr-3 text-xl text-white">TalkFX</span>
+    </a>
+    <div class="p-3 text-white flex flex-row">
+        {% if request.user.is_authenticated %}
+            Hello,&nbsp; <a href="{% url 'Account:account' %}">{{ request.user.username }}</a>
+        {% endif %}
+    </div>
+
+
+    <div class="container mx-auto flex p-5 flex-col md:flex-row items-center">
+        <div class="search-bar mt-sm-2 mr-2">
+            <form method="get">
+                <input class="form-control" type="text" name="q" id="id_q" placeholder="Search...">
+            </form>
+        </div>
+        <nav class="flex lg:w-5/5 flex-wrap items-center text-base md:ml-auto">
+            {% if request.user.is_authenticated %}
+                <a class="options" href="{% url 'Account:home' %}">Home</a>
+                <div class="dropdown">
+                    <button class="dropbtn">Forex World</button>
+                    <div class="dropdown-content">
+                        <a href="{% url 'Account:technical_analysis' %}">Technical Analysis</a>
+                        <a href="{% url 'Account:forex_quotes' %}">Forex Quotes</a>
+                        <a href="{% url 'Account:fundamental_analysis' %}">Fundamental Analysis</a>
+                    </div>
+                </div>
+                <a class="options" href="{% url 'Account:account' %}">Profile</a>
+                <a class="options" href="{% url 'Account:logout' %}">Logout</a>
+            {% else %}
+                <a class="options" href="{% url 'Account:home' %}">Home</a>
+                <a class="options" href="{% url 'Account:login' %}">Login</a>
+                <a class="options" href="{% url 'Account:register' %}">Register</a>
+            {% endif %}
+        </nav>
+    </div>
+</header>
+
+<script type="text/javascript">
+	document.getElementById("id_q").value = "{{query}}"
+</script>

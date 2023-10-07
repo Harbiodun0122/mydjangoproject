@@ -1,0 +1,6 @@
+# Default ignored files
+/Lib/
+/Scripts/
+/pyvenv.cfg
+/TalkFX/db.sqlite3
+/TalkFX/manage.py

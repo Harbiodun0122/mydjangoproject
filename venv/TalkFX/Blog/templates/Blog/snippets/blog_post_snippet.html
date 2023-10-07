@@ -1,0 +1,58 @@
+{% load static %}
+
+{% if blog_post %}
+<section class="text-gray-600 body-font border-red-500">
+    <div class="px-5 py-5 mx-auto flex flex-col">
+        <div class="lg:w-6/6 h-6/6 mx-auto">
+            <div class="h-max overflow-hidden">
+                <img class="w-max h-max" src="{{blog_post.image.url}}">
+            </div>
+            <div class="flex flex-col sm:flex-row mt-10">
+                <div class="sm:w-3/3 text-center sm:pr-8 sm:py-8">
+
+                    <div class="flex flex-col items-center text-center justify-center">
+                        <a href="{% url 'blog:detail' post.slug %}">
+                            <h2 class="text-blue-900 text-xl">{{ blog_post.title }}</h2>
+                        </a>
+                        <div class="mt-2 mb-4">
+                            {{ blog_post.author.username }} on {{ blog_post.date_updated }}
+                        </div>
+                        <div>
+                            {% if blog_post.author == request.user %}
+                            <a href="{% url 'Blog:edit' blog_post.slug %}" class="btn btn-primary">Update</a>
+                            <a href="{% url 'Blog:delete' blog_post.slug %}" class="btn btn-danger">Delete</a>
+                            {% endif %}
+                        </div>
+
+
+                    </div>
+                </div>
+                <div class="sm:w-2/3 sm:pl-8 sm:py-8 sm:border-l border-blue-800 sm:border-t-0 border-t mt-4 pt-4 sm:mt-0 text-center sm:text-left text-dark">
+                    <p class="">{{blog_post.body|truncatechars:180}}</p>
+                    <a class="pt-3 text-blue-500 inline-flex items-center hover:text-blue-900 text-decoration-none"
+                       href="{% url 'blog:detail' post.slug %}">
+                        Read More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+
+{% if query %}
+<div class="container">
+    <div class="row">
+        <div class="card m-auto">
+            <div class="card-body mt-2 mb-2">
+                <h2 class="card-title">No results</h2>
+                <p class="card-text">There were no results matching the search: "{{ query }}"</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endif %}
+
+{% endif %}
+

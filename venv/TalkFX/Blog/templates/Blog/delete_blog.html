@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <div class="margin-auto">
+        <form method="POST">{% csrf_token %}
+            Are you sure you want to delete the post?
+            <input type="submit" value="Yes">
+            <a href="../">Cancel</a>
+        </form>
+
+    </div>
+{% endblock %}
